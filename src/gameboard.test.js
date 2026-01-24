@@ -61,9 +61,17 @@ describe('placeShip function works as intended', () => {
   test('Ship is placed correctly in vertical direction', () => {
     const gameboard = new Gameboard();
     const supposedShip = new Ship(3);
-    gameboard.placeShip(1, 2, 3, true);
-    expect(gameboard.board[1][2]).toStrictEqual(supposedShip);
+    gameboard.placeShip(2, 1, 3, false);
+    expect(gameboard.board[2][1]).toStrictEqual(supposedShip);
     expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
-    expect(gameboard.board[3][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][3]).toStrictEqual(supposedShip);
+  });
+});
+
+describe('recieveAttack function works as intended', () => {
+  test('Attack hits', () => {
+    const gameboard = new Gameboard();
+    gameboard.placeShip(1, 2, 3, true);
+
   });
 });
