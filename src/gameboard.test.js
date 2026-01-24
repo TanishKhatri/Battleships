@@ -1,4 +1,6 @@
 import Gameboard from "./gameboard.js";
+import Ship from "./ship.js";
+
 const DEFAULT_BOARD_LENGTH = 10;
 
 describe('Gameboard class is created succesfully', () => {
@@ -36,5 +38,32 @@ describe('Gameboard class is created succesfully', () => {
         expect(square).toBeNull();
       });
     });
+  });
+});
+
+describe('placeShip function works as intended', () => {
+  test('Ship is placed correctly', () => {
+    const gameboard = new Gameboard();
+    const supposedShip = new Ship(1);
+    gameboard.placeShip(0, 0, 1, true);
+    expect(gameboard.board[0][0]).toStrictEqual(supposedShip);
+  });
+
+  test('Ship is placed correctly in horizontal direction', () => {
+    const gameboard = new Gameboard();
+    const supposedShip = new Ship(3);
+    gameboard.placeShip(1, 2, 3, true);
+    expect(gameboard.board[1][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[3][2]).toStrictEqual(supposedShip);
+  });
+
+  test('Ship is placed correctly in vertical direction', () => {
+    const gameboard = new Gameboard();
+    const supposedShip = new Ship(3);
+    gameboard.placeShip(1, 2, 3, true);
+    expect(gameboard.board[1][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[3][2]).toStrictEqual(supposedShip);
   });
 });
