@@ -5,6 +5,7 @@ class Gameboard {
   board;
   xBoardLength;
   yBoardLength;
+  shipsOnBoard;
 
   constructor(
     xBoardLength = DEFAULT_BOARD_LENGTH,
@@ -15,6 +16,7 @@ class Gameboard {
     );
     this.xBoardLength = xBoardLength;
     this.yBoardLength = yBoardLength;
+    this.shipsOnBoard = 0;
   }
 
   //Is Horizontal is either true or false, if it's false assume it to be vertical
@@ -30,6 +32,8 @@ class Gameboard {
         this.board[x][y + i] = ship;
       }
     }
+
+    this.shipsOnBoard++;
   }
 
   receiveAttack(x, y) {
@@ -38,8 +42,21 @@ class Gameboard {
       this.board[x][y] = 'miss';
       return false;
     }
-    this.board[x][y].hit();
+
+    const ship = this.board[x][y];
+    ship.hit();
+    if (ship.isSunk()) {
+      this.shipsOnBoard--;
+    }
     return true;
+  }
+
+  allSunk() {
+    if (this.shipsOnBoard === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

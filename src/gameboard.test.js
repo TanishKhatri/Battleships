@@ -88,3 +88,15 @@ describe("recieveAttack function works as intended", () => {
     expect(ship.hits).toBe(0);
   });
 });
+
+describe("allSunk is working as intended", () => {
+  test("The ships are sunk", () => {
+    const gameboard = new Gameboard();
+    gameboard.placeShip(1, 2, 3, true);
+    gameboard.receiveAttack(1,2);
+    gameboard.receiveAttack(2,2);
+    expect(gameboard.allSunk()).toBe(false);
+    gameboard.receiveAttack(3,2);
+    expect(gameboard.allSunk()).toBe(true);
+  });
+});
