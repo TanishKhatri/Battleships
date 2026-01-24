@@ -1,4 +1,4 @@
-import Gameboard from './gameboard.js';
+import Gameboard from "./gameboard.js";
 
 class Player {
   id;
@@ -7,7 +7,7 @@ class Player {
   constructor() {
     this.id = crypto.randomUUID();
     this.gameboard = new Gameboard();
-  } 
+  }
 }
 
 export default Player;

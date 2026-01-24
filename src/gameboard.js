@@ -39,7 +39,7 @@ class Gameboard {
   receiveAttack(x, y) {
     const attack = this.board[x][y];
     if (attack === null) {
-      this.board[x][y] = 'miss';
+      this.board[x][y] = "miss";
       return false;
     }
 
