@@ -6,8 +6,13 @@ class Gameboard {
   xBoardLength;
   yBoardLength;
 
-  constructor(xBoardLength = DEFAULT_BOARD_LENGTH, yBoardLength = xBoardLength) {
-    this.board = new Array(xBoardLength).fill(new Array(yBoardLength).fill(null));
+  constructor(
+    xBoardLength = DEFAULT_BOARD_LENGTH,
+    yBoardLength = xBoardLength,
+  ) {
+    this.board = new Array(xBoardLength).fill(
+      new Array(yBoardLength).fill(null),
+    );
     this.xBoardLength = xBoardLength;
     this.yBoardLength = yBoardLength;
   }
@@ -18,17 +23,23 @@ class Gameboard {
     const ship = new Ship(shipSize);
     if (isHorizontal) {
       for (let i = 0; i < shipSize; i++) {
-        this.board[x+i][y] = ship;
+        this.board[x + i][y] = ship;
       }
     } else {
       for (let i = 0; i < shipSize; i++) {
-        this.board[x][y+i] = ship;
+        this.board[x][y + i] = ship;
       }
     }
   }
 
   receiveAttack(x, y) {
-
+    const attack = this.board[x][y];
+    if (attack === null) {
+      this.board[x][y] = 'miss';
+      return false;
+    }
+    this.board[x][y].hit();
+    return true;
   }
 }
 
