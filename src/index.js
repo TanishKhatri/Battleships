@@ -1,3 +1,3 @@
 import "./styles.css";
-import dom from './dom.js';
+import "./dom.js";
 console.log("It Works");
