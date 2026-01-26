@@ -1,3 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --title-font: "Black Ops One", system-ui;
+  --cream: #FAF3E1;
+  --dark-cream: #F5E7C6;
+  --orange: #FA8112;
+  --dark-gray: #222222;
+}
+
 body {
-  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cream);
+}
+
+.titleScreenContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.titleScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameTitle {
+  font-family: var(--title-font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3.5rem;
+  color: var(--dark-gray);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.titleContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.cannon {
+  width: 40px;
+  height: auto;
+}
+
+.cannonImage {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cannon.hidden {
+  display:none;
+}
+
+p.selectPlayer {
+  font-family: var(--title-font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+  color: var(--dark-gray);
+}
+
+.selectMode {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  column-gap: 12px;
+  width: fit-content;
+}
+
+.shipWheelBlack {
+  width: 100px;
+  height: auto;
+}
+
+.arrow rect#primary {
+  fill: #F5E7C6;
+}
+
+.arrow:hover rect#primary {
+  fill: #ffda85
+}
+
+.arrow.activated rect#primary {
+  fill: var(--dark-gray);
+}
+
+.enterKey:hover {
+  background-color: #ffda85;
+}
+
+.arrowFlexContainer,.upArrow {
+  flex: 1;
+}
+.upArrowContainer {
+  display: flex;
+}
+
+.leftArrow {
+  transform: rotate(270deg);
+}
+
+.downArrow{
+  transform: rotate(180deg);
+}
+.rightArrow {
+  transform: rotate(90deg);
+}
+
+.enterKey {
+  background-color: var(--dark-cream);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 2px solid var(--dark-gray);
+  gap: 5px 10px;
+  padding: 15px;
+}
+
+.enterText {
+  font-size: 1.4rem;
 }
