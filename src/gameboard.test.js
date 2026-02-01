@@ -66,6 +66,18 @@ describe("placeShip function works as intended", () => {
     expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
     expect(gameboard.board[2][3]).toStrictEqual(supposedShip);
   });
+
+  test("Ships are not placed anywhere else", () => {
+    const gameboard = new Gameboard();
+    const supposedShip = new Ship(3);
+    gameboard.placeShip(2, 1, 3, false);
+    expect(gameboard.board[2][1]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][3]).toStrictEqual(supposedShip);
+    expect(gameboard.board[2][4]).not.toStrictEqual(supposedShip);
+    expect(gameboard.board[1][4]).not.toStrictEqual(supposedShip);
+    expect(gameboard.board[1][1]).not.toStrictEqual(supposedShip);
+  });
 });
 
 describe("recieveAttack function works as intended", () => {

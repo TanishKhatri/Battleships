@@ -11,8 +11,8 @@ class Gameboard {
     xBoardLength = DEFAULT_BOARD_LENGTH,
     yBoardLength = xBoardLength,
   ) {
-    this.board = new Array(xBoardLength).fill(
-      new Array(yBoardLength).fill(null),
+    this.board = Array.from({ length: xBoardLength }, () =>
+      Array.from({ length: yBoardLength }, () => null)
     );
     this.xBoardLength = xBoardLength;
     this.yBoardLength = yBoardLength;
@@ -24,12 +24,12 @@ class Gameboard {
   placeShip(x, y, shipSize, isHorizontal) {
     const ship = new Ship(shipSize);
     if (isHorizontal) {
-      for (let i = 0; i < shipSize; i++) {
-        this.board[x + i][y] = ship;
+      for (let i = x; i < x + shipSize; i++) {
+        this.board[i][y] = ship;
       }
     } else {
-      for (let i = 0; i < shipSize; i++) {
-        this.board[x][y + i] = ship;
+      for (let i = y; i < y + shipSize; i++) {
+        this.board[x][i] = ship;
       }
     }
 

@@ -1,3 +1,4 @@
+import { Player, Computer } from "./player.js";
 function renderGame(mode) {
   if (mode === "1player") {
     const titleScreen = document.querySelector(".titleScreenContainer");
