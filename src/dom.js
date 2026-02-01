@@ -1,3 +1,5 @@
+import renderGame from "./renderGame";
+
 function renderTitleScreen() {
   const titleScreenTemplate = document.querySelector(
     "template.titleScreenTemplate",
@@ -15,6 +17,16 @@ const downArrow = document.querySelector(".downArrow");
 const rightArrow = document.querySelector(".rightArrow");
 const enterKey = document.querySelector(".enterKey");
 
+let currChoice = "1player";
+
+function toggleCurrChoice() {
+  if (currChoice === "1player") {
+    currChoice = "2player";
+  } else {
+    currChoice = "1player";
+  }
+}
+
 function toggleCannonIcons() {
   const player1Cannon = document.querySelector(".player1Selector > .cannon");
   const player2Cannon = document.querySelector(".player2Selector > .cannon");
@@ -26,16 +38,25 @@ function arrowEnterAddFunction(e) {
   if (e.key === "ArrowUp") {
     upArrow.classList.add("activated");
     toggleCannonIcons();
+    toggleCurrChoice();
   } else if (e.key === "ArrowLeft") {
     leftArrow.classList.add("activated");
   } else if (e.key === "ArrowDown") {
     downArrow.classList.add("activated");
     toggleCannonIcons();
+    toggleCurrChoice();
   } else if (e.key === "ArrowRight") {
     rightArrow.classList.add("activated");
   } else if (e.key === "Enter") {
     enterKey.classList.add("activated");
+    removeEventListeners();
+    renderGame(currChoice);
   }
+}
+
+function removeEventListeners() {
+  document.removeEventListener("keydown", arrowEnterAddFunction);
+  document.removeEventListener("keyup", arrrowEnterRemoveFunction);
 }
 
 function arrrowEnterRemoveFunction(e) {
