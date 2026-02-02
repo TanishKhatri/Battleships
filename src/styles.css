@@ -104,7 +104,8 @@ p.selectPlayer {
   fill: var(--dark-gray);
 }
 
-.enterKey.activated {
+.enterKey.activated,
+.rotate.activated {
   background-color: var(--dark-gray);
   color: var(--cream);
 }
@@ -128,7 +129,8 @@ p.selectPlayer {
   transform: rotate(90deg);
 }
 
-.enterKey {
+.enterKey,
+.rotate {
   background-color: var(--dark-cream);
   display: flex;
   justify-content: center;
@@ -221,4 +223,17 @@ p.selectPlayer {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+}
+
+.cell.hovered {
+  background-color: #ffb168;
+}
+
+.placeShipsContainer + .controls {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.rText {
+  font-size: 1.4rem;
 }

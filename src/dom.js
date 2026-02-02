@@ -70,6 +70,8 @@ function arrrowEnterRemoveFunction(e) {
     rightArrow.classList.remove("activated");
   } else if (e.key === "Enter") {
     enterKey.classList.remove("activated");
+  } else if (e.key === "R") {
+    
   }
 }
 document.addEventListener("keydown", arrowEnterAddFunction);
