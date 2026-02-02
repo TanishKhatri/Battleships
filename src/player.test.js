@@ -1,4 +1,4 @@
-import {Player} from "./player.js";
+import { Player } from "./player.js";
 import Gameboard from "./gameboard.js";
 
 describe("Player class works", () => {
@@ -46,4 +46,3 @@ describe("Player class works", () => {
     });
   });
 });
-

@@ -5,8 +5,8 @@ const PLAYER_SHIPS = {
   Battleship: 4,
   Destroyer: 3,
   Submarine: 3,
-  Patrol: 2
-} 
+  Patrol: 2,
+};
 
 function renderGame(mode) {
   if (mode === "1player") {
@@ -59,7 +59,7 @@ function renderGame(mode) {
       } else if (e.key === "ArrowLeft") {
         leftArrow.classList.add("activated");
       } else if (e.key === "ArrowDown") {
-        downArrow.classList.add("activated");;
+        downArrow.classList.add("activated");
       } else if (e.key === "ArrowRight") {
         rightArrow.classList.add("activated");
       } else if (e.key === "Enter") {
@@ -69,7 +69,6 @@ function renderGame(mode) {
       }
     }
 
-    
     function arrrowEnterRemoveFunction(e) {
       if (e.key === "ArrowUp") {
         upArrow.classList.remove("activated");
@@ -158,14 +157,14 @@ function renderShips() {
   battleship.appendChild(battleshipBody);
   ships.appendChild(battleship);
 
-  const destroyer =  document.createElement("div");
+  const destroyer = document.createElement("div");
   destroyer.classList.add("destroyer");
 
   const destroyerText = document.createElement("p");
   destroyerText.classList.add("destroyerText");
   destroyerText.textContent = "Destroyer";
   destroyer.appendChild(destroyerText);
-  
+
   const destroyerBody = document.createElement("div");
   destroyerBody.classList.add("destroyerBody");
   for (let i = 0; i < PLAYER_SHIPS.Destroyer; i++) {
@@ -183,7 +182,7 @@ function renderShips() {
   submarineText.classList.add("submarineText");
   submarineText.textContent = "Submarine";
   submarine.appendChild(submarineText);
-  
+
   const submarineBody = document.createElement("div");
   submarineBody.classList.add("submarineBody");
   for (let i = 0; i < PLAYER_SHIPS.Submarine; i++) {

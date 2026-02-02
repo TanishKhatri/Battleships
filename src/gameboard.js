@@ -12,7 +12,7 @@ class Gameboard {
     yBoardLength = xBoardLength,
   ) {
     this.board = Array.from({ length: xBoardLength }, () =>
-      Array.from({ length: yBoardLength }, () => null)
+      Array.from({ length: yBoardLength }, () => null),
     );
     this.xBoardLength = xBoardLength;
     this.yBoardLength = yBoardLength;

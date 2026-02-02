@@ -10,7 +10,7 @@ function renderTitleScreen() {
 }
 
 renderTitleScreen();
- 
+
 const upArrow = document.querySelector(".upArrow");
 const leftArrow = document.querySelector(".leftArrow");
 const downArrow = document.querySelector(".downArrow");
