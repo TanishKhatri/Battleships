@@ -75,7 +75,6 @@ class Computer {
           }
         }
         this.gameboard.placeShip(x, y, shipSize, isHorizontal);
-        console.log(`Horiontal ran with x: ${x}, y: ${y}, shipSize: ${shipSize}, isHorizontal: ${isHorizontal}`);
       } else if (!isHorizontal) {
         const y = Math.floor(Math.random()*(this.gameboard.yBoardLength - shipSize + 1));
         const x = Math.floor(Math.random()*this.gameboard.xBoardLength);
@@ -86,15 +85,9 @@ class Computer {
           }
         }
         this.gameboard.placeShip(x, y, shipSize, isHorizontal);
-        console.log(`Horiontal ran with x: ${x}, y: ${y}, shipSize: ${shipSize}, isHorizontal: ${isHorizontal}`);
       }
     }
   }
 }
-
-const computer = new Computer();
-console.log(structuredClone(computer.gameboard));
-computer.placeShipsRandomly();
-console.log(computer.gameboard);
 
 export {Player, Computer};
