@@ -93,6 +93,26 @@ function renderGame(mode) {
               });
             }
           });
+        } else if (currentMode === "placeShip" && !isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          if (parseInt(selected[0].dataset.x) === 0) {
+            return;
+          }
+
+          cells.forEach((cell) => {
+            if (
+              parseInt(cell.dataset.x) >= parseInt(selected[0].dataset.x) - 1 &&
+              parseInt(cell.dataset.x) <=
+                parseInt(selected[selected.length - 1].dataset.x) - 1 &&
+              cell.dataset.y === selected[0].dataset.y
+            ) {
+              cell.classList.add("selected");
+            }
+          });
+
+          selected[selected.length - 1].classList.remove("selected");
         }
       } else if (e.key === "ArrowLeft") {
         leftArrow.classList.add("activated");
@@ -116,6 +136,24 @@ function renderGame(mode) {
           });
 
           selected[selected.length - 1].classList.remove("selected");
+        } else if (currentMode === "placeShip" && !isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          let selectedCol = parseInt(selected[0].dataset.y);
+          if (selectedCol === 0) {
+            return;
+          }
+          cells.forEach((cell) => {
+            if (parseInt(cell.dataset.y) === selectedCol - 1) {
+              selected.forEach((selected) => {
+                if (selected.dataset.x === cell.dataset.x) {
+                  cell.classList.add("selected");
+                  selected.classList.remove("selected");
+                }
+              });
+            }
+          });
         }
       } else if (e.key === "ArrowDown") {
         downArrow.classList.add("activated");
@@ -148,6 +186,26 @@ function renderGame(mode) {
               });
             }
           });
+        } else if (currentMode === "placeShip" && !isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          if (parseInt(selected[selected.length-1].dataset.x) === gridLength - 1) {
+            return;
+          }
+
+          cells.forEach((cell) => {
+            if (
+              parseInt(cell.dataset.x) >= parseInt(selected[0].dataset.x) + 1 &&
+              parseInt(cell.dataset.x) <=
+                parseInt(selected[selected.length - 1].dataset.x) + 1 &&
+              cell.dataset.y === selected[0].dataset.y
+            ) {
+              cell.classList.add("selected");
+            }
+          });
+
+          selected[0].classList.remove("selected");
         }
       } else if (e.key === "ArrowRight") {
         rightArrow.classList.add("activated");
@@ -174,6 +232,24 @@ function renderGame(mode) {
           });
 
           selected[0].classList.remove("selected");
+        } else if (currentMode === "placeShip" && !isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          let selectedCol = parseInt(selected[0].dataset.y);
+          if (selectedCol === gridLength - 1) {
+            return;
+          }
+          cells.forEach((cell) => {
+            if (parseInt(cell.dataset.y) === selectedCol + 1) {
+              selected.forEach((selected) => {
+                if (selected.dataset.x === cell.dataset.x) {
+                  cell.classList.add("selected");
+                  selected.classList.remove("selected");
+                }
+              });
+            }
+          });
         }
       } else if (e.key === "Enter") {
         enterKey.classList.add("activated");
@@ -181,6 +257,7 @@ function renderGame(mode) {
           const ships = document.querySelectorAll(".gameShip");
           const selectedShip = ships[index];
           const sizeOfSelectedShip = selectedShip.dataset.shipSize;
+          currShipLength = sizeOfSelectedShip;
           const cells = document.querySelectorAll(".cell");
 
           for (let i = 0; i < sizeOfSelectedShip; i++) {
@@ -191,6 +268,44 @@ function renderGame(mode) {
         }
       } else if (e.key === "r") {
         rotateR.classList.add("activated");
+        if (currentMode === "placeShip") {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".selected");
+          
+          if (isShipHorizontal) {
+            if (currShipLength > gridLength - selected[0].dataset.x) {
+              return;
+            }
+            for (let i = 0; i < selected.length; i++) {
+              cells.forEach((cell) => {
+                if (parseInt(selected[i].dataset.y) - i === parseInt(cell.dataset.y)) {
+                  if (parseInt(selected[i].dataset.x) + i === parseInt(cell.dataset.x)) {
+                    selected[i].classList.remove("selected");
+                    cell.classList.add("selected");
+                  }
+                }
+              });
+            }
+
+            isShipHorizontal = false;
+          } else {
+            if (currShipLength > gridLength - selected[0].dataset.y) {
+              return;
+            }
+            for (let i = 0; i < selected.length; i++) {
+              cells.forEach((cell) => {
+                if (parseInt(selected[i].dataset.y) + i === parseInt(cell.dataset.y)) {
+                  if (parseInt(selected[i].dataset.x) - i === parseInt(cell.dataset.x)) {
+                    selected[i].classList.remove("selected");
+                    cell.classList.add("selected");
+                  }
+                }
+              });
+            }
+
+            isShipHorizontal = true;
+          }
+        }
       }
     }
 
