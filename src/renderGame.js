@@ -1,4 +1,7 @@
 import { Player } from "./player.js";
+import cannon from "./images/cannon-free-1-svgrepo-com.svg";
+
+const gridLength = 10;
 
 const PLAYER_SHIPS = {
   Carrier: 5,
@@ -7,6 +10,10 @@ const PLAYER_SHIPS = {
   Submarine: 3,
   Patrol: 2,
 };
+
+let currentMode = "selectShip";
+let currShipLength = 0;
+let isShipHorizontal = true;
 
 function renderGame(mode) {
   if (mode === "1player") {
@@ -53,17 +60,135 @@ function renderGame(mode) {
     const enterKey = document.querySelector(".enterKey");
     const rotateR = document.querySelector(".rotate");
 
+    const cannonList = document.querySelectorAll(".cannonSVG");
+    let index = 0;
     function arrowEnterAddFunction(e) {
       if (e.key === "ArrowUp") {
         upArrow.classList.add("activated");
+        if (currentMode === "selectShip") {
+          if (index === 0) {
+            index = cannonList.length - 1;
+          } else {
+            index--;
+          }
+          for (let cannon of cannonList) {
+            cannon.classList.add("hidden");
+          }
+          cannonList[index].classList.remove("hidden");
+        } else if (currentMode === "placeShip" && isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          let selectedRow = parseInt(selected[0].dataset.x);
+          if (selectedRow === 0) {
+            return;
+          }
+          cells.forEach((cell) => {
+            if (parseInt(cell.dataset.x) === selectedRow - 1) {
+              selected.forEach((selected) => {
+                if (selected.dataset.y === cell.dataset.y) {
+                  cell.classList.add("selected");
+                  selected.classList.remove("selected");
+                }
+              });
+            }
+          });
+        }
       } else if (e.key === "ArrowLeft") {
         leftArrow.classList.add("activated");
+        if (currentMode === "placeShip" && isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          if (parseInt(selected[0].dataset.y) === 0) {
+            return;
+          }
+
+          cells.forEach((cell) => {
+            if (
+              parseInt(cell.dataset.y) >= parseInt(selected[0].dataset.y) - 1 &&
+              parseInt(cell.dataset.y) <=
+                parseInt(selected[selected.length - 1].dataset.y) - 1 &&
+              cell.dataset.x === selected[0].dataset.x
+            ) {
+              cell.classList.add("selected");
+            }
+          });
+
+          selected[selected.length - 1].classList.remove("selected");
+        }
       } else if (e.key === "ArrowDown") {
         downArrow.classList.add("activated");
+        if (currentMode === "selectShip") {
+          let listLength = cannonList.length - 1;
+          if (index === listLength) {
+            index = 0;
+          } else {
+            index++;
+          }
+          for (let cannon of cannonList) {
+            cannon.classList.add("hidden");
+          }
+          cannonList[index].classList.remove("hidden");
+        } else if (currentMode === "placeShip" && isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          let selectedRow = parseInt(selected[0].dataset.x);
+          if (selectedRow === gridLength - 1) {
+            return;
+          }
+          cells.forEach((cell) => {
+            if (parseInt(cell.dataset.x) === selectedRow + 1) {
+              selected.forEach((selected) => {
+                if (selected.dataset.y === cell.dataset.y) {
+                  cell.classList.add("selected");
+                  selected.classList.remove("selected");
+                }
+              });
+            }
+          });
+        }
       } else if (e.key === "ArrowRight") {
         rightArrow.classList.add("activated");
+        if (currentMode === "placeShip" && isShipHorizontal) {
+          const cells = document.querySelectorAll(".cell");
+          const selected = document.querySelectorAll(".cell.selected");
+
+          if (
+            parseInt(selected[selected.length - 1].dataset.y) ===
+            gridLength - 1
+          ) {
+            return;
+          }
+
+          cells.forEach((cell) => {
+            if (
+              parseInt(cell.dataset.y) >= parseInt(selected[0].dataset.y) + 1 &&
+              parseInt(cell.dataset.y) <=
+                parseInt(selected[selected.length - 1].dataset.y) + 1 &&
+              cell.dataset.x === selected[0].dataset.x
+            ) {
+              cell.classList.add("selected");
+            }
+          });
+
+          selected[0].classList.remove("selected");
+        }
       } else if (e.key === "Enter") {
         enterKey.classList.add("activated");
+        if (currentMode === "selectShip") {
+          const ships = document.querySelectorAll(".gameShip");
+          const selectedShip = ships[index];
+          const sizeOfSelectedShip = selectedShip.dataset.shipSize;
+          const cells = document.querySelectorAll(".cell");
+
+          for (let i = 0; i < sizeOfSelectedShip; i++) {
+            cells[i].classList.add("selected");
+          }
+
+          currentMode = "placeShip";
+        }
       } else if (e.key === "r") {
         rotateR.classList.add("activated");
       }
@@ -120,7 +245,8 @@ function renderShips() {
   ships.classList.add("shipsContainer");
 
   const carrier = document.createElement("div");
-  carrier.classList.add("carrier");
+  carrier.classList.add("carrier", "gameShip");
+  carrier.dataset.shipSize = PLAYER_SHIPS.Carrier;
 
   const carrierText = document.createElement("p");
   carrierText.classList.add("carrierText");
@@ -129,18 +255,31 @@ function renderShips() {
 
   const carrierBody = document.createElement("div");
   carrierBody.classList.add("carrierBody");
-
   for (let i = 0; i < PLAYER_SHIPS.Carrier; i++) {
     const carrierCell = document.createElement("div");
     carrierCell.classList.add("carrierCell");
     carrierBody.appendChild(carrierCell);
   }
+
+  const cannonSVG = document.createElement("div");
+  cannonSVG.classList.add("cannonSVG");
+
+  const cannonImage = document.createElement("img");
+  cannonImage.classList.add("cannonPlaceShips");
+  cannonImage.src = cannon;
+  cannonSVG.appendChild(cannonImage);
+
   carrier.appendChild(carrierBody);
+  carrier.appendChild(cannonSVG);
+
+  const hiddenCannonSVG = cannonSVG.cloneNode(true);
+  hiddenCannonSVG.classList.add("hidden");
 
   ships.appendChild(carrier);
 
   const battleship = document.createElement("div");
-  battleship.classList.add("battleship");
+  battleship.classList.add("battleship", "gameShip");
+  battleship.dataset.shipSize = PLAYER_SHIPS.Battleship;
 
   const battleshipText = document.createElement("p");
   battleshipText.classList.add("battleshipText");
@@ -154,11 +293,14 @@ function renderShips() {
     battleshipCell.classList.add("battleshipCell");
     battleshipBody.appendChild(battleshipCell);
   }
+
   battleship.appendChild(battleshipBody);
+  battleship.appendChild(hiddenCannonSVG.cloneNode(true));
   ships.appendChild(battleship);
 
   const destroyer = document.createElement("div");
-  destroyer.classList.add("destroyer");
+  destroyer.classList.add("destroyer", "gameShip");
+  destroyer.dataset.shipSize = PLAYER_SHIPS.Destroyer;
 
   const destroyerText = document.createElement("p");
   destroyerText.classList.add("destroyerText");
@@ -173,10 +315,12 @@ function renderShips() {
     destroyerBody.appendChild(destroyerCell);
   }
   destroyer.appendChild(destroyerBody);
+  destroyer.appendChild(hiddenCannonSVG.cloneNode(true));
   ships.appendChild(destroyer);
 
   const submarine = document.createElement("div");
-  submarine.classList.add("submarine");
+  submarine.classList.add("submarine", "gameShip");
+  submarine.dataset.shipSize = PLAYER_SHIPS.Submarine;
 
   const submarineText = document.createElement("p");
   submarineText.classList.add("submarineText");
@@ -191,10 +335,12 @@ function renderShips() {
     submarineBody.appendChild(submarineCell);
   }
   submarine.appendChild(submarineBody);
+  submarine.appendChild(hiddenCannonSVG.cloneNode(true));
   ships.appendChild(submarine);
 
   const patrol = document.createElement("div");
-  patrol.classList.add("patrol");
+  patrol.classList.add("patrol", "gameShip");
+  patrol.dataset.shipSize = PLAYER_SHIPS.Patrol;
 
   const patrolText = document.createElement("p");
   patrolText.classList.add("patrolText");
@@ -209,6 +355,7 @@ function renderShips() {
     patrolBody.appendChild(patrolCell);
   }
   patrol.appendChild(patrolBody);
+  patrol.appendChild(hiddenCannonSVG.cloneNode(true));
   ships.appendChild(patrol);
 
   return ships;

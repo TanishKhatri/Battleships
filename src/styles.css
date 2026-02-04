@@ -70,7 +70,7 @@ body {
 }
 
 .cannon.hidden {
-  display: none;
+  opacity: 0;
 }
 
 p.selectPlayer {
@@ -176,6 +176,8 @@ p.selectPlayer {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 350px;
+  height: 400px;
 }
 
 .carrier,
@@ -183,11 +185,11 @@ p.selectPlayer {
 .destroyer,
 .submarine,
 .patrol {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 4fr 1fr;
+  justify-items: flex-start;
   align-items: center;
-  gap: 10px;
 }
 
 .carrierText,
@@ -237,4 +239,37 @@ p.selectPlayer {
 
 .rText {
   font-size: 1.4rem;
+}
+
+.placeShipsTitle {
+  font-family: var(--title-font);
+  color: var(--dark-gray);
+  font-weight: 400;
+}
+
+.carrierBodyFlexContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.cannonPlaceShips {
+  width: 50px;
+  height: 50px;
+  transform: scaleX(-1);
+}
+
+.cannonSVG {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cannonSVG.hidden {
+  opacity: 0;
+}
+
+.cell.selected {
+  background-color: #ff9d42;
 }
