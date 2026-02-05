@@ -54,8 +54,8 @@ describe("placeShip function works as intended", () => {
     const supposedShip = new Ship(3);
     gameboard.placeShip(1, 2, 3, true);
     expect(gameboard.board[1][2]).toStrictEqual(supposedShip);
-    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
-    expect(gameboard.board[3][2]).toStrictEqual(supposedShip);
+    expect(gameboard.board[1][3]).toStrictEqual(supposedShip);
+    expect(gameboard.board[1][4]).toStrictEqual(supposedShip);
   });
 
   test("Ship is placed correctly in vertical direction", () => {
@@ -63,8 +63,8 @@ describe("placeShip function works as intended", () => {
     const supposedShip = new Ship(3);
     gameboard.placeShip(2, 1, 3, false);
     expect(gameboard.board[2][1]).toStrictEqual(supposedShip);
-    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
-    expect(gameboard.board[2][3]).toStrictEqual(supposedShip);
+    expect(gameboard.board[3][1]).toStrictEqual(supposedShip);
+    expect(gameboard.board[4][1]).toStrictEqual(supposedShip);
   });
 
   test("Ships are not placed anywhere else", () => {
@@ -72,8 +72,8 @@ describe("placeShip function works as intended", () => {
     const supposedShip = new Ship(3);
     gameboard.placeShip(2, 1, 3, false);
     expect(gameboard.board[2][1]).toStrictEqual(supposedShip);
-    expect(gameboard.board[2][2]).toStrictEqual(supposedShip);
-    expect(gameboard.board[2][3]).toStrictEqual(supposedShip);
+    expect(gameboard.board[3][1]).toStrictEqual(supposedShip);
+    expect(gameboard.board[4][1]).toStrictEqual(supposedShip);
     expect(gameboard.board[2][4]).not.toStrictEqual(supposedShip);
     expect(gameboard.board[1][4]).not.toStrictEqual(supposedShip);
     expect(gameboard.board[1][1]).not.toStrictEqual(supposedShip);
@@ -87,7 +87,7 @@ describe("recieveAttack function works as intended", () => {
     const ship = gameboard.board[1][2];
     gameboard.receiveAttack(1, 2);
     expect(ship.hits).toBe(1);
-    gameboard.receiveAttack(2, 2);
+    gameboard.receiveAttack(1, 3);
     expect(ship.hits).toBe(2);
   });
 
@@ -106,9 +106,9 @@ describe("allSunk is working as intended", () => {
     const gameboard = new Gameboard();
     gameboard.placeShip(1, 2, 3, true);
     gameboard.receiveAttack(1, 2);
-    gameboard.receiveAttack(2, 2);
+    gameboard.receiveAttack(1, 3);
     expect(gameboard.allSunk()).toBe(false);
-    gameboard.receiveAttack(3, 2);
+    gameboard.receiveAttack(1, 4);
     expect(gameboard.allSunk()).toBe(true);
   });
 });

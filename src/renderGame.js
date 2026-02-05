@@ -257,7 +257,7 @@ function renderGame(mode) {
           const ships = document.querySelectorAll(".gameShip");
           const selectedShip = ships[index];
           const sizeOfSelectedShip = selectedShip.dataset.shipSize;
-          currShipLength = sizeOfSelectedShip;
+          currShipLength = parseInt(sizeOfSelectedShip);
           const cells = document.querySelectorAll(".cell");
 
           for (let i = 0; i < sizeOfSelectedShip; i++) {
@@ -265,6 +265,17 @@ function renderGame(mode) {
           }
 
           currentMode = "placeShip";
+        } else if (currentMode === "placeShip") {
+          const selected = document.querySelectorAll(".selected");
+          player1.placeShip(parseInt(selected[0].dataset.x), parseInt(selected[0].dataset.y), currShipLength, isShipHorizontal);
+          const board = renderBoard(player1);
+          const currentGameBoard = document.querySelector(".gameboard");
+          board.classList.add("gameboard");
+          currentGameBoard.remove();
+          const boardContainer = document.querySelector(".playerBoardContainer");
+          boardContainer.appendChild(board);
+          currentMode = "selectShip";
+          isShipHorizontal = true;
         }
       } else if (e.key === "r") {
         rotateR.classList.add("activated");
@@ -334,7 +345,6 @@ function renderBoard(player1) {
   const board = document.createElement("div");
   board.classList.add("gameboard");
 
-  const cellList = [];
   for (let i = 0; i < player1.gameboard.xBoardLength; i++) {
     for (let j = 0; j < player1.gameboard.yBoardLength; j++) {
       const cell = document.createElement("div");
@@ -348,7 +358,6 @@ function renderBoard(player1) {
         cell.classList.add("hasShip");
         board.appendChild(cell);
       }
-      cellList.push(cell);
     }
   }
 

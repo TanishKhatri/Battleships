@@ -24,16 +24,16 @@ class Player {
   placeShip(x, y, shipSize, isHorizontal) {
     //Check for out of bounds
     if (
-      (isHorizontal && (x < 0 || x + shipSize > this.gameboard.xBoardLength)) ||
-      y < 0 ||
-      y > this.gameboard.yBoardLength - 1
+      (isHorizontal && (y < 0 || y + shipSize > this.gameboard.yBoardLength)) ||
+      x < 0 ||
+      x > this.gameboard.xBoardLength - 1
     ) {
       return "invalidPlacement";
     } else if (
       (!isHorizontal &&
-        (y < 0 || y + shipSize > this.gameboard.yBoardLength)) ||
-      x < 0 ||
-      x > this.gameboard.xBoardLength - 1
+        (x < 0 || x + shipSize > this.gameboard.xBoardLength)) ||
+      y < 0 ||
+      y > this.gameboard.yBoardLength - 1
     ) {
       return "invalidPlacement";
     }
@@ -41,13 +41,13 @@ class Player {
     //Check whether there is a ship already there.
     if (isHorizontal) {
       for (let i = 0; i < shipSize; i++) {
-        if (this.gameboard.board[x + i][y] !== null) {
+        if (this.gameboard.board[x][y + i] !== null) {
           return "invalidPlacement";
         }
       }
     } else if (!isHorizontal) {
       for (let i = 0; i < shipSize; i++) {
-        if (this.gameboard.board[x][y + i] !== null) {
+        if (this.gameboard.board[x + i][y] !== null) {
           return "invalidPlacement";
         }
       }

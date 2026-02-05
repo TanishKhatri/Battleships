@@ -24,15 +24,14 @@ class Gameboard {
   placeShip(x, y, shipSize, isHorizontal) {
     const ship = new Ship(shipSize);
     if (isHorizontal) {
-      for (let i = x; i < x + shipSize; i++) {
-        this.board[i][y] = ship;
-      }
-    } else {
       for (let i = y; i < y + shipSize; i++) {
         this.board[x][i] = ship;
       }
+    } else {
+      for (let i = x; i < x + shipSize; i++) {
+        this.board[i][y] = ship;
+      }
     }
-
     this.shipsOnBoard++;
   }
 

@@ -36,7 +36,7 @@ describe("Player class works", () => {
       const player = new Player();
       player.placeShip(1, 2, 3, true);
       expect(player.placeShip(1, 2, 3, true)).toBe("invalidPlacement");
-      expect(player.placeShip(2, 1, 3, false)).toBe("invalidPlacement");
+      expect(player.placeShip(1, 3, 3, false)).toBe("invalidPlacement");
     });
 
     test("Does not return InvalidPlacement on valids", () => {
