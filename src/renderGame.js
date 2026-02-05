@@ -60,7 +60,7 @@ function renderGame(mode) {
     const enterKey = document.querySelector(".enterKey");
     const rotateR = document.querySelector(".rotate");
 
-    const cannonList = document.querySelectorAll(".cannonSVG");
+    let cannonList = document.querySelectorAll(".cannonSVG");
     let index = 0;
     function arrowEnterAddFunction(e) {
       if (e.key === "ArrowUp") {
@@ -255,6 +255,7 @@ function renderGame(mode) {
         enterKey.classList.add("activated");
         if (currentMode === "selectShip") {
           const ships = document.querySelectorAll(".gameShip");
+
           const selectedShip = ships[index];
           const sizeOfSelectedShip = selectedShip.dataset.shipSize;
           currShipLength = parseInt(sizeOfSelectedShip);
@@ -264,10 +265,18 @@ function renderGame(mode) {
             cells[i].classList.add("selected");
           }
 
+          ships[index].remove();
           currentMode = "placeShip";
+          cannonList = document.querySelectorAll(".cannonSVG");
+          index = 0;
+
         } else if (currentMode === "placeShip") {
           const selected = document.querySelectorAll(".selected");
-          player1.placeShip(parseInt(selected[0].dataset.x), parseInt(selected[0].dataset.y), currShipLength, isShipHorizontal);
+          const response = player1.placeShip(parseInt(selected[0].dataset.x), parseInt(selected[0].dataset.y), currShipLength, isShipHorizontal);
+          if (response === "invalidPlacement") {
+            return;
+          }
+          
           const board = renderBoard(player1);
           const currentGameBoard = document.querySelector(".gameboard");
           board.classList.add("gameboard");
@@ -276,6 +285,23 @@ function renderGame(mode) {
           boardContainer.appendChild(board);
           currentMode = "selectShip";
           isShipHorizontal = true;
+
+
+          const ships = document.querySelectorAll(".gameShip");
+          if (ships.length === 0) {
+            //All Ships are now Placed
+            currentMode = "shipsPlaced";
+            const pressEnterButton = document.createElement("div");
+            pressEnterButton.classList.add("pressEnterButton");
+            pressEnterButton.textContent = "Press Enter";
+            const shipsContainer = document.querySelector(".shipsContainer");
+            shipsContainer.appendChild(pressEnterButton);
+          }
+        } else if (currentMode === "shipsPlaced") {
+          document.removeEventListener("keydown", arrowEnterAddFunction);
+          document.removeEventListener("keyup", arrrowEnterRemoveFunction);
+
+          console.log(player1);
         }
       } else if (e.key === "r") {
         rotateR.classList.add("activated");

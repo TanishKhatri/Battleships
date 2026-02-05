@@ -273,3 +273,10 @@ p.selectPlayer {
 .cell.selected {
   background-color: #ffc792;
 }
+
+.pressEnterButton {
+  align-self: center;
+  font-family: var(--title-font);
+  color: var(--dark-gray);
+  font-size: 3.2rem;
+}
