@@ -190,7 +190,10 @@ function renderGame(mode) {
           const cells = document.querySelectorAll(".cell");
           const selected = document.querySelectorAll(".cell.selected");
 
-          if (parseInt(selected[selected.length-1].dataset.x) === gridLength - 1) {
+          if (
+            parseInt(selected[selected.length - 1].dataset.x) ===
+            gridLength - 1
+          ) {
             return;
           }
 
@@ -269,23 +272,28 @@ function renderGame(mode) {
           currentMode = "placeShip";
           cannonList = document.querySelectorAll(".cannonSVG");
           index = 0;
-
         } else if (currentMode === "placeShip") {
           const selected = document.querySelectorAll(".selected");
-          const response = player1.placeShip(parseInt(selected[0].dataset.x), parseInt(selected[0].dataset.y), currShipLength, isShipHorizontal);
+          const response = player1.placeShip(
+            parseInt(selected[0].dataset.x),
+            parseInt(selected[0].dataset.y),
+            currShipLength,
+            isShipHorizontal,
+          );
           if (response === "invalidPlacement") {
             return;
           }
-          
+
           const board = renderBoard(player1);
           const currentGameBoard = document.querySelector(".gameboard");
           board.classList.add("gameboard");
           currentGameBoard.remove();
-          const boardContainer = document.querySelector(".playerBoardContainer");
+          const boardContainer = document.querySelector(
+            ".playerBoardContainer",
+          );
           boardContainer.appendChild(board);
           currentMode = "selectShip";
           isShipHorizontal = true;
-
 
           const ships = document.querySelectorAll(".gameShip");
           if (ships.length === 0) {
@@ -308,15 +316,21 @@ function renderGame(mode) {
         if (currentMode === "placeShip") {
           const cells = document.querySelectorAll(".cell");
           const selected = document.querySelectorAll(".selected");
-          
+
           if (isShipHorizontal) {
             if (currShipLength > gridLength - selected[0].dataset.x) {
               return;
             }
             for (let i = 0; i < selected.length; i++) {
               cells.forEach((cell) => {
-                if (parseInt(selected[i].dataset.y) - i === parseInt(cell.dataset.y)) {
-                  if (parseInt(selected[i].dataset.x) + i === parseInt(cell.dataset.x)) {
+                if (
+                  parseInt(selected[i].dataset.y) - i ===
+                  parseInt(cell.dataset.y)
+                ) {
+                  if (
+                    parseInt(selected[i].dataset.x) + i ===
+                    parseInt(cell.dataset.x)
+                  ) {
                     selected[i].classList.remove("selected");
                     cell.classList.add("selected");
                   }
@@ -331,8 +345,14 @@ function renderGame(mode) {
             }
             for (let i = 0; i < selected.length; i++) {
               cells.forEach((cell) => {
-                if (parseInt(selected[i].dataset.y) + i === parseInt(cell.dataset.y)) {
-                  if (parseInt(selected[i].dataset.x) - i === parseInt(cell.dataset.x)) {
+                if (
+                  parseInt(selected[i].dataset.y) + i ===
+                  parseInt(cell.dataset.y)
+                ) {
+                  if (
+                    parseInt(selected[i].dataset.x) - i ===
+                    parseInt(cell.dataset.x)
+                  ) {
                     selected[i].classList.remove("selected");
                     cell.classList.add("selected");
                   }
